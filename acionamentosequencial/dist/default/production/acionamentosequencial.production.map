@@ -1,0 +1,50 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Thu Aug 15 21:16:01 2024
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                 RES_VECT       code   0x000000    program   0x00004c
+                   .cinit    romdata   0x000026    program   0x000004
+.config_2007_BUILD/DEFAULT/PRODUCTION/ACIONAM       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000027      
+                            0x002007    0x002007      
+            41 out of 2182 program addresses used, program memory utilization is 1%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                DESLIGAR0   0x000016    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                DESLIGAR1   0x00001a    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                DESLIGAR2   0x00001e    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                DESLIGAR3   0x000022    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                   LIGAR0   0x000006    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                   LIGAR1   0x00000a    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                   LIGAR2   0x00000e    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                   LIGAR3   0x000012    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                     LOOP   0x000004    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     LOOP   0x000004    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                   LIGAR0   0x000006    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                   LIGAR1   0x00000a    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                   LIGAR2   0x00000e    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                   LIGAR3   0x000012    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                DESLIGAR0   0x000016    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                DESLIGAR1   0x00001a    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                DESLIGAR2   0x00001e    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+                DESLIGAR3   0x000022    program     static /home/luis/MPLABXProjects/acionamentosequencial/acionamentoSequencial.asm
+
+

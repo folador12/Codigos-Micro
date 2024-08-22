@@ -1,0 +1,48 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Thu Aug 15 21:56:14 2024
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                 RES_VECT       code   0x000000    program   0x000080
+                   .cinit    romdata   0x000040    program   0x000004
+.config_2007_BUILD/DEFAULT/PRODUCTION/CONTADO       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000041      
+                            0x002007    0x002007      
+            67 out of 2182 program addresses used, program memory utilization is 3%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+         ATUALIZA_DISPLAY   0x00002e    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+             BUSCA_CODIGO   0x000035    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+          B_DOWN_ACIONADO   0x000022    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+             B_N_ACIONADO   0x00000f    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+            B_UP_ACIONADO   0x000016    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+         B_ZERAR_ACIONADO   0x000013    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+                     LOOP   0x000008    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+                    SET_9   0x000032    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     LOOP   0x000008    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+             B_N_ACIONADO   0x00000f    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+         B_ZERAR_ACIONADO   0x000013    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+            B_UP_ACIONADO   0x000016    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+          B_DOWN_ACIONADO   0x000022    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+         ATUALIZA_DISPLAY   0x00002e    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+                    SET_9   0x000032    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+             BUSCA_CODIGO   0x000035    program     static /home/luis/MPLABXProjects/contador/contador_8b_simple.asm
+
+
