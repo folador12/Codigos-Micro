@@ -1,106 +1,138 @@
-; PIC16F628A Configuration Bit Settings
-
-; Assembly source line config statements
-
-#include "p16f628a.inc"
+; TODO INSERT CONFIG CODE HERE USING CONFIG BITS GENERATOR
+    
+    #include "p16f628a.inc"
 
 ; CONFIG
 ; __config 0xFF70
  __CONFIG _FOSC_INTOSCIO & _WDTE_OFF & _PWRTE_ON & _MCLRE_ON & _BOREN_ON & _LVP_OFF & _CPD_OFF & _CP_OFF
  
  
-#define BANK0		BCF STATUS, RP0
-#define BANK1		BSF STATUS, RP0
+#define BANK0		    BCF STATUS,RP0
+#define BANK1		    BSF STATUS,RP0
  
-#define LAMPADA		PORTA,0
- 
-#define BOT1		PORTA,1
-#define BOT2		PORTA,2
-#define BOT3		PORTA,3
- 
-    CBLOCK 0x20
+    CBLOCK  0X20
+	FILTRO
+	FLAGS
 	TEMPO1
 	TEMPO2
-	FLAG_PISCA
-	FREQUENCIA
+	TEMPO3
+	TEMPO4
     ENDC
     
+;variaveis
+#define JA_LI		    FLAGS,0    
     
-V_TEMPO1_2HZ		equ .250    ; Tempo para 2Hz (HIGH)
-V_TEMPO2_2HZ		equ .250    ; Tempo para 2Hz (LOW)
-V_TEMPO1_5HZ		equ .100    ; Tempo para 5Hz (HIGH)
-V_TEMPO2_5HZ		equ .100    ; Tempo para 5Hz (LOW)
+;entradas
+#define	BOT_LIGA1	    PORTA,1
+#define	BOT_LIGA2	    PORTA,2
+#define	BOT_DESLIGA	    PORTA,3
+    
+#define	LAMPADA		    PORTA,0
+    
+;constantes
+V_FILTRO    equ	.100
 
+V_TEMPO1    equ	.110
+V_TEMPO2    equ	.110
+V_TEMPO3    equ	.150
+V_TEMPO4    equ	.150
+    
 RES_VECT  CODE    0x0000            ; processor reset vector
+
     BANK1
-    BCF	    TRISA,0
+    BCF		TRISA,0
     BANK0
-    CLRF PORTA            ; Inicia RA0 (LAMPADA) apagado
-    CLRF FLAG_PISCA       ; Inicializa flag de pisca desligado
-    CLRF FREQUENCIA       ; Inicializa a frequência como 0
-
+    MOVLW	V_FILTRO		    
+    MOVWF	FILTRO		    
+    BCF		JA_LI		    
+    
 LOOP
-    BTFSC	    BOT1       ; Verifica se o botão RA1 foi pressionado (2Hz)
-    CALL	    PISCA_2HZ
-    BTFSC	    BOT2       ; Verifica se o botão RA2 foi pressionado (5Hz)
-    CALL	    PISCA_5HZ
-    BTFSC	    BOT3      ; Verifica se o botão RA3 foi pressionado (desligar)
-    CALL	    DESLIGAR
-    GOTO	    LOOP
+    BTFSS	BOT_LIGA1		    
+    GOTO	LIGA1_ACIONADO	    
+    BTFSS	BOT_LIGA2		    
+    GOTO	LIGA2_ACIONADO	    
+    GOTO	LOOP		    
     
+LIGA1_ACIONADO
+    BTFSC	JA_LI		    
+    GOTO	LOOP		    
+    DECFSZ	FILTRO,F		    
+    GOTO	LOOP		    
+    BSF		JA_LI		    
+    GOTO	PISCA2HZ_LED	    
     
-PISCA_2HZ
-    MOVF FLAG_PISCA, W
-    BTFSS STATUS, Z       ; Se já estiver piscando, sai
+LIGA2_ACIONADO
+    BTFSC	JA_LI		    
+    GOTO	LOOP		    
+    DECFSZ	FILTRO,F		    
+    GOTO	LOOP		    
+    BSF		JA_LI		    
+    GOTO	PISCA5HZ_LED	    
+    
+PISCA5HZ_LED
+    CALL	DEVE_DESLIGAR
+    BSF		LAMPADA
+    CALL	ESPERAR_500MS
+    BCF		LAMPADA
+    CALL	ESPERAR_500MS
+    GOTO	PISCA5HZ_LED
+    
+ESPERAR_500MS
+    CALL	DEVE_DESLIGAR
+    MOVLW	V_TEMPO1
+    MOVWF	TEMPO1
+    
+INICIALIZA_TEMPO2
+    MOVLW	V_TEMPO2
+    MOVWF	TEMPO2
+    
+DEC_TEMPO2
+    CALL	DEVE_DESLIGAR
+    DECFSZ	TEMPO2,F
+    GOTO	DEC_TEMPO2
+    
+DEC_TEMPO1
+    DECFSZ	TEMPO1,F
+    GOTO	INICIALIZA_TEMPO2
     RETURN
-    MOVLW 0x01            ; Configura 2Hz como frequência atual
-    MOVWF FREQUENCIA
-    BSF FLAG_PISCA        ; Habilita o pisca
-    GOTO INICIAR_PISCA
-
-PISCA_5HZ
-    MOVF FLAG_PISCA, W
-    BTFSS STATUS, Z       ; Se já estiver piscando, sai
+    
+PISCA2HZ_LED
+    CALL	DEVE_DESLIGAR
+    BSF		LAMPADA
+    CALL	ESPERAR_100MS
+    BCF		LAMPADA
+    CALL	ESPERAR_100MS
+    GOTO	PISCA2HZ_LED
+    
+ESPERAR_100MS
+    CALL	DEVE_DESLIGAR
+    MOVLW	V_TEMPO3
+    MOVWF	TEMPO3
+    
+INICIALIZA_TEMPO4
+    MOVLW	V_TEMPO4
+    MOVWF	TEMPO4
+    
+DEC_TEMPO4
+    CALL	DEVE_DESLIGAR
+    DECFSZ	TEMPO4,F
+    GOTO	DEC_TEMPO4
+    
+DEC_TEMPO3
+    DECFSZ	TEMPO3,F
+    GOTO	INICIALIZA_TEMPO4
     RETURN
-    MOVLW 0x02            ; Configura 5Hz como frequência atual
-    MOVWF FREQUENCIA
-    BSF FLAG_PISCA        ; Habilita o pisca
-    GOTO INICIAR_PISCA
-
-INICIAR_PISCA
-    BTFSS FLAG_PISCA, 0   ; Verifica se o pisca está habilitado
+    
+DEVE_DESLIGAR
+    BTFSS	BOT_DESLIGA
+    GOTO	DESLIGA_LED
     RETURN
-    BSF LAMPADA           ; Liga a lâmpada
-    CALL ESPERAR
-    BCF LAMPADA           ; Desliga a lâmpada
-    CALL ESPERAR
-    GOTO INICIAR_PISCA
-
-ESPERAR
-    MOVF FREQUENCIA, W
-    BTFSC STATUS, Z
-    RETURN
-    MOVLW V_TEMPO1_2HZ
-    MOVWF TEMPO1
-    MOVLW V_TEMPO2_2HZ
-    MOVWF TEMPO2
-    MOVLW V_TEMPO1_5HZ
-    MOVWF TEMPO1
-    MOVLW V_TEMPO2_5HZ
-    MOVWF TEMPO2
-    CALL DELAY
-    RETURN
-
-DESLIGAR
-    BCF FLAG_PISCA        ; Desabilita o pisca
-    CLRF PORTA            ; Apaga a lâmpada
-    RETURN
-
-DELAY
-    DECFSZ TEMPO1, F
-    GOTO $-1
-    DECFSZ TEMPO2, F
-    GOTO $-2
-    RETURN
-
-    END
+    
+DESLIGA_LED
+    BCF		LAMPADA
+    MOVLW	V_FILTRO		    
+    MOVWF	FILTRO		    
+    BCF		JA_LI		    
+    GOTO	LOOP
+    
+    END    

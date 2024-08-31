@@ -1,11 +1,11 @@
 MPLINK 5.08, LINKER
-Linker Map File - Created Thu Aug 22 13:19:18 2024
+Linker Map File - Created Wed Aug 28 00:43:42 2024
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
-                 RES_VECT       code   0x000000    program   0x00000c
-                   .cinit    romdata   0x000006    program   0x000004
+                 RES_VECT       code   0x000000    program   0x000082
+                   .cinit    romdata   0x000041    program   0x000004
 .config_2007_BUILD/DEFAULT/PRODUCTION/PISCA_P       code   0x002007    program   0x000002
 
 
@@ -13,20 +13,50 @@ Linker Map File - Created Thu Aug 22 13:19:18 2024
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000000    0x000007      
+                            0x000000    0x000042      
                             0x002007    0x002007      
-            9 out of 2182 program addresses used, program memory utilization is 0%
+            68 out of 2182 program addresses used, program memory utilization is 3%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
+               DEC_TEMPO1   0x000025    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+               DEC_TEMPO2   0x000022    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+               DEC_TEMPO3   0x000036    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+               DEC_TEMPO4   0x000033    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+              DESLIGA_LED   0x00003c    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+            DEVE_DESLIGAR   0x000039    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+            ESPERAR_100MS   0x00002e    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+            ESPERAR_500MS   0x00001d    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+        INICIALIZA_TEMPO2   0x000020    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+        INICIALIZA_TEMPO4   0x000031    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+           LIGA1_ACIONADO   0x00000b    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+           LIGA2_ACIONADO   0x000011    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+                     LOOP   0x000006    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+             PISCA2HZ_LED   0x000028    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+             PISCA5HZ_LED   0x000017    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
 
 
 
                               Symbols - Sorted by Address
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
+                     LOOP   0x000006    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+           LIGA1_ACIONADO   0x00000b    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+           LIGA2_ACIONADO   0x000011    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+             PISCA5HZ_LED   0x000017    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+            ESPERAR_500MS   0x00001d    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+        INICIALIZA_TEMPO2   0x000020    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+               DEC_TEMPO2   0x000022    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+               DEC_TEMPO1   0x000025    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+             PISCA2HZ_LED   0x000028    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+            ESPERAR_100MS   0x00002e    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+        INICIALIZA_TEMPO4   0x000031    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+               DEC_TEMPO4   0x000033    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+               DEC_TEMPO3   0x000036    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+            DEVE_DESLIGAR   0x000039    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
+              DESLIGA_LED   0x00003c    program     static /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm
 
 

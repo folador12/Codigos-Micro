@@ -1,14 +1,12 @@
-MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-22-2024  10:19:18         PAGE  1
+MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-27-2024  21:43:41         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00001 ; PIC16F628A Configuration Bit Settings
-                      00002 
-                      00003 ; Assembly source line config statements
-                      00004 
-                      00005 #include "p16f628a.inc"
+                      00001 ; TODO INSERT CONFIG CODE HERE USING CONFIG BITS GENERATOR
+                      00002     
+                      00003     #include "p16f628a.inc"
                       00001         LIST
                       00002 
                       00003 ;==========================================================================
@@ -19,52 +17,155 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00008 ;==========================================================================
                       00009 
                       00386         LIST
-                      00006 
-                      00007 ; CONFIG
-                      00008 ; __config 0xFF70
-2007   3F70           00009  __CONFIG _FOSC_INTOSCIO & _WDTE_OFF & _PWRTE_ON & _MCLRE_ON & _BOREN_ON & _LVP_OFF & _CPD_OFF & _CP_OFF
-                      00010  
-                      00011  
-                      00012 #define BANK0           BCF STATUS, RP0
-                      00013 #define BANK1           BSF STATUS, RP0
-                      00014  
-                      00015 #define LAMPADA         PORTA,0
-                      00016  
-                      00017 #define BOT1            PORTA,1
-                      00018 #define BOT2            PORTA,2
-                      00019 #define BOT3            PORTA,3
-                      00020  
-                      00021     CBLOCK 0x20
-  00000020            00022         TEMPO1
-  00000021            00023         TEMPO2
-  00000022            00024         FLAG_PISCA
-  00000023            00025         FREQUENCIA
-                      00026     ENDC
-                      00027     
-                      00028     
-  000000FA            00029 V_TEMPO1_2HZ            equ .250    ; Tempo para 2Hz (HIGH)
-  000000FA            00030 V_TEMPO2_2HZ            equ .250    ; Tempo para 2Hz (LOW)
-  00000064            00031 V_TEMPO1_5HZ            equ .100    ; Tempo para 5Hz (HIGH)
-  00000064            00032 V_TEMPO2_5HZ            equ .100    ; Tempo para 5Hz (LOW)
-                      00033 
-                      00034 RES_VECT  CODE    0x0000            ; processor reset vector
-0000   1683           00035     BANK1
+                      00004 
+                      00005 ; CONFIG
+                      00006 ; __config 0xFF70
+2007   3F70           00007  __CONFIG _FOSC_INTOSCIO & _WDTE_OFF & _PWRTE_ON & _MCLRE_ON & _BOREN_ON & _LVP_OFF & _CPD_OFF & _CP_OFF
+                      00008  
+                      00009  
+                      00010 #define BANK0               BCF STATUS,RP0
+                      00011 #define BANK1               BSF STATUS,RP0
+                      00012  
+                      00013     CBLOCK  0X20
+  00000020            00014         FILTRO
+  00000021            00015         FLAGS
+  00000022            00016         TEMPO1
+  00000023            00017         TEMPO2
+  00000024            00018         TEMPO3
+  00000025            00019         TEMPO4
+                      00020     ENDC
+                      00021     
+                      00022 ;variaveis
+                      00023 #define JA_LI               FLAGS,0    
+                      00024     
+                      00025 ;entradas
+                      00026 #define BOT_LIGA1           PORTA,1
+                      00027 #define BOT_LIGA2           PORTA,2
+                      00028 #define BOT_DESLIGA         PORTA,3
+                      00029     
+                      00030 #define LAMPADA             PORTA,0
+                      00031     
+                      00032 ;constantes
+  00000064            00033 V_FILTRO    equ .100
+                      00034 
+  0000006E            00035 V_TEMPO1    equ .110
+  0000006E            00036 V_TEMPO2    equ .110
+  00000096            00037 V_TEMPO3    equ .150
+  00000096            00038 V_TEMPO4    equ .150
+                      00039     
+                      00040 RES_VECT  CODE    0x0000            ; processor reset vector
+                      00041 
+0000   1683           00042     BANK1
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0001   1005           00036     BCF     TRISA,0
-0002   1283           00037     BANK0
-0003   0185           00038     CLRF PORTA            ; Inicia RA0 (LAMPADA) apagado
-0004   01A2           00039     CLRF FLAG_PISCA       ; Inicializa flag de pisca desligado
-0005   01A3           00040     CLRF FREQUENCIA       ; Inicializa a frequência como 0
-                      00041     
-                      00042 
-MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-22-2024  10:19:18         PAGE  2
+MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-27-2024  21:43:41         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-3F70                  00043     END
-MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-22-2024  10:19:18         PAGE  3
+0001   1005           00043     BCF         TRISA,0
+0002   1283           00044     BANK0
+0003   3064           00045     MOVLW       V_FILTRO                    
+0004   00A0           00046     MOVWF       FILTRO              
+0005   1021           00047     BCF         JA_LI               
+                      00048     
+0006                  00049 LOOP
+0006   1C85           00050     BTFSS       BOT_LIGA1                   
+0007   2???           00051     GOTO        LIGA1_ACIONADO      
+0008   1D05           00052     BTFSS       BOT_LIGA2                   
+0009   2???           00053     GOTO        LIGA2_ACIONADO      
+000A   2???           00054     GOTO        LOOP                
+                      00055     
+000B                  00056 LIGA1_ACIONADO
+000B   1821           00057     BTFSC       JA_LI               
+000C   2???           00058     GOTO        LOOP                
+000D   0BA0           00059     DECFSZ      FILTRO,F                    
+000E   2???           00060     GOTO        LOOP                
+000F   1421           00061     BSF         JA_LI               
+0010   2???           00062     GOTO        PISCA2HZ_LED        
+                      00063     
+0011                  00064 LIGA2_ACIONADO
+0011   1821           00065     BTFSC       JA_LI               
+0012   2???           00066     GOTO        LOOP                
+0013   0BA0           00067     DECFSZ      FILTRO,F                    
+0014   2???           00068     GOTO        LOOP                
+0015   1421           00069     BSF         JA_LI               
+0016   2???           00070     GOTO        PISCA5HZ_LED        
+                      00071     
+0017                  00072 PISCA5HZ_LED
+0017   2???           00073     CALL        DEVE_DESLIGAR
+0018   1405           00074     BSF         LAMPADA
+0019   2???           00075     CALL        ESPERAR_500MS
+001A   1005           00076     BCF         LAMPADA
+001B   2???           00077     CALL        ESPERAR_500MS
+001C   2???           00078     GOTO        PISCA5HZ_LED
+                      00079     
+001D                  00080 ESPERAR_500MS
+001D   2???           00081     CALL        DEVE_DESLIGAR
+001E   306E           00082     MOVLW       V_TEMPO1
+001F   00A2           00083     MOVWF       TEMPO1
+                      00084     
+0020                  00085 INICIALIZA_TEMPO2
+0020   306E           00086     MOVLW       V_TEMPO2
+0021   00A3           00087     MOVWF       TEMPO2
+                      00088     
+0022                  00089 DEC_TEMPO2
+0022   2???           00090     CALL        DEVE_DESLIGAR
+0023   0BA3           00091     DECFSZ      TEMPO2,F
+0024   2???           00092     GOTO        DEC_TEMPO2
+                      00093     
+0025                  00094 DEC_TEMPO1
+0025   0BA2           00095     DECFSZ      TEMPO1,F
+MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-27-2024  21:43:41         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0026   2???           00096     GOTO        INICIALIZA_TEMPO2
+0027   0008           00097     RETURN
+                      00098     
+0028                  00099 PISCA2HZ_LED
+0028   2???           00100     CALL        DEVE_DESLIGAR
+0029   1405           00101     BSF         LAMPADA
+002A   2???           00102     CALL        ESPERAR_100MS
+002B   1005           00103     BCF         LAMPADA
+002C   2???           00104     CALL        ESPERAR_100MS
+002D   2???           00105     GOTO        PISCA2HZ_LED
+                      00106     
+002E                  00107 ESPERAR_100MS
+002E   2???           00108     CALL        DEVE_DESLIGAR
+002F   3096           00109     MOVLW       V_TEMPO3
+0030   00A4           00110     MOVWF       TEMPO3
+                      00111     
+0031                  00112 INICIALIZA_TEMPO4
+0031   3096           00113     MOVLW       V_TEMPO4
+0032   00A5           00114     MOVWF       TEMPO4
+                      00115     
+0033                  00116 DEC_TEMPO4
+0033   2???           00117     CALL        DEVE_DESLIGAR
+0034   0BA5           00118     DECFSZ      TEMPO4,F
+0035   2???           00119     GOTO        DEC_TEMPO4
+                      00120     
+0036                  00121 DEC_TEMPO3
+0036   0BA4           00122     DECFSZ      TEMPO3,F
+0037   2???           00123     GOTO        INICIALIZA_TEMPO4
+0038   0008           00124     RETURN
+                      00125     
+0039                  00126 DEVE_DESLIGAR
+0039   1D85           00127     BTFSS       BOT_DESLIGA
+003A   2???           00128     GOTO        DESLIGA_LED
+003B   0008           00129     RETURN
+                      00130     
+003C                  00131 DESLIGA_LED
+003C   1005           00132     BCF         LAMPADA
+003D   3064           00133     MOVLW       V_FILTRO                    
+003E   00A0           00134     MOVWF       FILTRO              
+003F   1021           00135     BCF         JA_LI               
+0040   2???           00136     GOTO        LOOP
+                      00137     
+3F70                  00138     END    
+MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-27-2024  21:43:41         PAGE  4
 
 
 SYMBOL TABLE
@@ -72,11 +173,11 @@ SYMBOL TABLE
 
 ADDEN                             00000003
 ADEN                              00000003
-BANK0                             BCF STATUS, RP0
-BANK1                             BSF STATUS, RP0
-BOT1                              PORTA,1
-BOT2                              PORTA,2
-BOT3                              PORTA,3
+BANK0                             BCF STATUS,RP0
+BANK1                             BSF STATUS,RP0
+BOT_DESLIGA                       PORTA,3
+BOT_LIGA1                         PORTA,1
+BOT_LIGA2                         PORTA,2
 BRGH                              00000002
 C                                 00000000
 C1INV                             00000004
@@ -107,31 +208,45 @@ CSRC                              00000007
 DATA_CP_OFF                       00003FFF
 DATA_CP_ON                        00003EFF
 DC                                00000001
+DEC_TEMPO1                        00000025
+DEC_TEMPO2                        00000022
+DEC_TEMPO3                        00000036
+DEC_TEMPO4                        00000033
+DESLIGA_LED                       0000003C
+DEVE_DESLIGAR                     00000039
 EEADR                             0000009B
 EECON1                            0000009C
 EECON2                            0000009D
 EEDATA                            0000009A
 EEIE                              00000007
 EEIF                              00000007
+ESPERAR_100MS                     0000002E
+ESPERAR_500MS                     0000001D
 F                                 00000001
 FERR                              00000002
-FLAG_PISCA                        00000022
-FREQUENCIA                        00000023
-FSR                               00000004
-GIE                               00000007
-INDF                              00000000
-INTCON                            0000000B
-INTE                              00000004
-INTEDG                            00000006
-MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-22-2024  10:19:18         PAGE  4
+MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-27-2024  21:43:41         PAGE  5
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+FILTRO                            00000020
+FLAGS                             00000021
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INICIALIZA_TEMPO2                 00000020
+INICIALIZA_TEMPO4                 00000031
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
 INTF                              00000001
 IRP                               00000007
+JA_LI                             FLAGS,0
 LAMPADA                           PORTA,0
+LIGA1_ACIONADO                    0000000B
+LIGA2_ACIONADO                    00000011
+LOOP                              00000006
 NOT_BO                            00000000
 NOT_BOD                           00000000
 NOT_BOR                           00000000
@@ -149,6 +264,8 @@ PCON                              0000008E
 PEIE                              00000006
 PIE1                              0000008C
 PIR1                              0000000C
+PISCA2HZ_LED                      00000028
+PISCA5HZ_LED                      00000017
 PORTA                             00000005
 PORTB                             00000006
 PR2                               00000092
@@ -166,6 +283,12 @@ RA6                               00000006
 RA7                               00000007
 RB0                               00000000
 RB1                               00000001
+MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-27-2024  21:43:41         PAGE  6
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 RB2                               00000002
 RB3                               00000003
 RB4                               00000004
@@ -182,12 +305,6 @@ RD                                00000000
 RP0                               00000005
 RP1                               00000006
 RX9                               00000006
-MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-22-2024  10:19:18         PAGE  5
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 RX9D                              00000000
 SPBRG                             00000099
 SPEN                              00000007
@@ -205,8 +322,10 @@ T1OSCEN                           00000003
 T2CKPS0                           00000000
 T2CKPS1                           00000001
 T2CON                             00000012
-TEMPO1                            00000020
-TEMPO2                            00000021
+TEMPO1                            00000022
+TEMPO2                            00000023
+TEMPO3                            00000024
+TEMPO4                            00000025
 TMR0                              00000001
 TMR0IE                            00000005
 TMR0IF                            00000002
@@ -223,6 +342,12 @@ TMR2IF                            00000001
 TMR2ON                            00000002
 TOUTPS0                           00000003
 TOUTPS1                           00000004
+MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-27-2024  21:43:41         PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TOUTPS2                           00000005
 TOUTPS3                           00000006
 TRISA                             00000085
@@ -241,12 +366,6 @@ TRISB2                            00000002
 TRISB3                            00000003
 TRISB4                            00000004
 TRISB5                            00000005
-MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-22-2024  10:19:18         PAGE  6
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TRISB6                            00000006
 TRISB7                            00000007
 TRMT                              00000001
@@ -265,10 +384,11 @@ VRCON                             0000009F
 VREN                              00000007
 VROE                              00000006
 VRR                               00000005
-V_TEMPO1_2HZ                      000000FA
-V_TEMPO1_5HZ                      00000064
-V_TEMPO2_2HZ                      000000FA
-V_TEMPO2_5HZ                      00000064
+V_FILTRO                          00000064
+V_TEMPO1                          0000006E
+V_TEMPO2                          0000006E
+V_TEMPO3                          00000096
+V_TEMPO4                          00000096
 W                                 00000000
 WR                                00000001
 WREN                              00000002
@@ -281,6 +401,12 @@ _BOREN_ON                         00003FFF
 _CONFIG                           00002007
 _CPD_OFF                          00003FFF
 _CPD_ON                           00003EFF
+MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-27-2024  21:43:41         PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _CP_OFF                           00003FFF
 _CP_ON                            00001FFF
 _DEVID1                           00002006
@@ -300,12 +426,6 @@ _IDLOC0                           00002000
 _IDLOC1                           00002001
 _IDLOC2                           00002002
 _IDLOC3                           00002003
-MPASM 5.71  /HOME/LUIS/MPLABXPROJECTS/PISCA_   8-22-2024  10:19:18         PAGE  7
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 _INTOSC_OSC_CLKOUT                00003FFD
 _INTOSC_OSC_NOCLKOUT              00003FFC
 _INTRC_OSC_CLKOUT                 00003FFD

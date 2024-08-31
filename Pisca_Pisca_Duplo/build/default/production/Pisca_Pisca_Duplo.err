@@ -1,1 +1,1 @@
-Message[302] /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm 36 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/luis/MPLABXProjects/Pisca_Pisca_Duplo/Pisca_Pisca_Duplo.asm 43 : Register in operand not in bank 0.  Ensure that bank bits are correct.
