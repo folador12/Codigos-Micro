@@ -1,0 +1,66 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Wed Oct  2 14:20:59 2024
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                 RES_VECT       code   0x000000    program   0x000002
+                   .cinit    romdata   0x000001    program   0x000004
+                 INT_VECT       code   0x000004    program   0x000136
+.config_2007_BUILD/DEFAULT/PRODUCTION/CONTROL       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000002      
+                            0x000004    0x00009e      
+                            0x002007    0x002007      
+            159 out of 8454 program addresses used, program memory utilization is 1%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+         ATUALIZA_DISPLAY   0x000075    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+             BUSCA_CODIGO   0x000094    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+           LACO_PRINCIPAL   0x000027    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+                   LE_ADC   0x000030    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+          SAI_INTERRUPCAO   0x000012    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+                    START   0x000016    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+               SUB_16BITS   0x000061    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+            TESTA_CENTENA   0x000086    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+             TESTA_DEZENA   0x00007e    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+             TESTA_MILHAR   0x00008e    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+         VERIFICA_CENTENA   0x00004a    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+          VERIFICA_DEZENA   0x000057    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+          VERIFICA_MILHAR   0x00003d    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+         VERIFICA_UNIDADE   0x00005e    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+             X_EH_MENOR_Y   0x000073    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+           _INT_VECT_0033   0x000033    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+          SAI_INTERRUPCAO   0x000012    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+                    START   0x000016    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+           LACO_PRINCIPAL   0x000027    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+                   LE_ADC   0x000030    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+           _INT_VECT_0033   0x000033    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+          VERIFICA_MILHAR   0x00003d    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+         VERIFICA_CENTENA   0x00004a    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+          VERIFICA_DEZENA   0x000057    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+         VERIFICA_UNIDADE   0x00005e    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+               SUB_16BITS   0x000061    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+             X_EH_MENOR_Y   0x000073    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+         ATUALIZA_DISPLAY   0x000075    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+             TESTA_DEZENA   0x00007e    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+            TESTA_CENTENA   0x000086    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+             TESTA_MILHAR   0x00008e    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+             BUSCA_CODIGO   0x000094    program     static /home/luis/MPLABXProjects/Controlador_10bits/controlador_10bits.asm
+
+
